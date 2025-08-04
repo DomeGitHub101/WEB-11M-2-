@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valentine's Day Flip Book</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="wallpaper-left"></div>
+  <div class="wallpaper-right"></div>
+
+  <div id="hedlinecontainer">
+    <div id="shine">สุขสันต์วันครับรอบ 11 เดือนนะ💞</div>
+  </div>
+
+  <div class="gallery-wrapper">
+
+    <button class="nav left" onclick="showImage(-1)">&#10094;</button>
+
+    <div class="gallery-container">
+      <img class="slide" src="img1.jpg" alt="pic1" />
+      <img class="slide" src="img2.jpg" alt="pic2" />
+      <img class="slide" src="img3.jpg" alt="pic3" />
+      <img class="slide" src="img4.jpg" alt="pic4" />
+      <img class="slide" src="img5.jpg" alt="pic5" />
+    </div>
+
+    <button class="nav right" onclick="showImage(1)">&#10095;</button>
+
+  </div>
+
+  <div class="footer-message" id="typewriter"></div>
+
+  <!-- ปุ่มฟังเพลง -->
+  <div class="music-button-container">
+    <button id="music-btn" onclick="openMusic()" aria-label="ฟังเพลง">
+      🎵 Song For You!
+    </button>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    let startedTyping = false;
+
+    function showImage(direction) {
+      if (!startedTyping) {
+        startedTyping = true;
+        currentIndex = 0;
+        slides[currentIndex].classList.add("active");
+        typeEffect();
+      } else {
+        slides[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + direction + slides.length) % slides.length;
+        slides[currentIndex].classList.add("active");
+      }
+    }
+
+    const message = `ก็เค้าเป็นคนที่เขียนอะไรแบบนี้ไม่ค่อยเก่งเท่าไหร่หรอก แต่ก็ อยากจะบอกเธอว่า เค้ารักเธอมากๆ เลยนะ  
+ขอโทษที่บางครั้งเป็นคนที่เห็นแก่ตัวเกินไปหน่อย  
+เอาแต่ใจบ้าง อาจทำเธออึดอัดหรือหงุดหงิดบ้าง  
+ก็ต้องอยากขอโทษเธอจริงๆ  
+
+ก็อยู่ด้วยกันมาจนครบ 11 เดือนแล้วเนาะ  อยากจะขอบคุณเธอมากๆ ที่คอยอยู่กับเค้า  
+ในวันที่เค้าทำตัวไม่ดี คอยเตือนเวลาที่เค้าทำอะไรที่ไม่ควร  
+
+ก็อยากจะให้เธออยู่กับเค้าไปอีกนานๆ เลย  
+ส่วนของครบรอบที่เค้าจะให้เธอ เธอรอก่อนนะ  
+มันกำลังมาส่งน่ะ ก็ตั้งใจจะทำ WEBSITE นี้ขึ้นมาขอบคุณเธอจริงๆ  
+
+แล้วก็สุดท้ายแล้วก็อยากจะให้เธออย่าคิดมากเรื่องของขวัญ  
+ที่เค้าให้เธอเลยนะ  
+อยากให้ด้วยใจจริงๆ รักเธอมากๆ เลยนะ💖💖💖`;
+
+    const typewriter = document.getElementById("typewriter");
+    let i = 0;
+
+    function typeEffect() {
+      if (i < message.length) {
+        const char = message[i] === '\n' ? '<br>' : message[i];
+        typewriter.innerHTML += char;
+        i++;
+        setTimeout(typeEffect, 40);
+      }
+    }
+
+    function openMusic() {
+      window.open("https://youtu.be/3mYVyVY-lU4?si=A190-Fei-SkjrS8-", "_blank");
+    }
+  </script>
+
+</body>
+</html>

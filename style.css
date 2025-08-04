@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&family=Quicksand:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #ffe6f0, #fff0f5);
+  color: #d63384;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative; /* เพิ่มบรรทัดนี้ */
+  z-index: 0;          /* กำหนดชัดเจนว่าอยู่ล่าง */
+  background:
+    radial-gradient(circle, rgba(255, 192, 203, 0.07) 2px, transparent 2px),
+    linear-gradient(135deg, #ffe6f0, #fff0f5);
+  background-size: 120px 120px, 80px 80px, cover;
+
+  /* แก้ background-position ให้จุดไม่เลยขอบ */
+  background-position:
+    12px 12px,    /* จุด SVG */
+    12px 12px,    /* radial-gradient จุด 1 */
+    center;       /* linear-gradient */
+}
+
+.wallpaper-left,
+.wallpaper-right {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  width: 120px;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background-color: transparent;
+  opacity: 0.5;
+  filter: brightness(1.05);
+
+  background-image:
+    /* หัวใจ SVG */
+    url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ff5e9c' d='M10 18s-6.7-4.2-9-9c-1.4-3.1 1.2-6 4.2-6 1.6 0 3 1 3.8 2.2C9.8 4 11.2 3 12.8 3c3 0 5.6 2.9 4.2 6-2.3 4.8-9 9-9 9z'/%3E%3C/svg%3E"),
+
+    /* ลายจุด */
+    radial-gradient(circle, rgba(255, 192, 203, 0.15) 2px, transparent 2px),
+    radial-gradient(circle, rgba(255, 182, 193, 0.1) 2px, transparent 2px),
+
+    /* ลายเส้นโค้งหวาน ๆ */
+    conic-gradient(
+      from 90deg at 50% 50%,
+      rgba(255,182,193,0.12) 0deg 60deg,
+      transparent 60deg 180deg,
+      rgba(255,182,193,0.12) 180deg 240deg,
+      transparent 240deg 360deg
+    );
+
+  background-position:
+    10px 10px, /* หัวใจ */
+    0 0,       /* จุด 1 */
+    30px 30px, /* จุด 2 */
+    center;    /* เส้นโค้ง */
+
+  background-size:
+    80px 80px, /* หัวใจ */
+    60px 60px, /* จุด 1 */
+    60px 60px, /* จุด 2 */
+    120px 120px; /* เส้นโค้ง */
+
+  box-shadow:
+    inset 0 0 15px #ffb6c1,
+    3px 0 15px rgba(255, 105, 180, 0.3);
+}
+
+
+.wallpaper-left {
+  left: 0;
+}
+
+.wallpaper-right {
+  right: 0;
+  box-shadow:
+    inset 0 0 15px #ffb6c1,
+    -3px 0 15px rgba(255, 105, 180, 0.3);
+}
+
+#hedlinecontainer {
+  margin-top: 30px;
+  background-color: #ffb6c1;
+  padding: 22px 50px;
+  border-radius: 25px;
+  box-shadow:
+    0 4px 12px rgba(255, 105, 180, 0.35),
+    inset 0 -4px 15px #ff7eb9;
+  animation: fadeIn 1.8s ease-in-out;
+  user-select: none;
+}
+
+#shine {
+  font-family: 'Sriracha', cursive;
+  font-size: 30px;
+  text-align: center;
+  color: #fff;
+  text-shadow:
+    0 0 10px #ff3c81,
+    1px 1px 3px #c2185b;
+}
+
+.gallery-wrapper {
+  position: relative;
+  margin: 45px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  max-width: 720px;
+  z-index: 10;
+}
+
+.gallery-container {
+  position: relative;
+  width: 340px;
+  height: 440px;
+  overflow: hidden;
+  border-radius: 25px;
+  box-shadow:
+    0 10px 25px rgba(255, 105, 180, 0.35),
+    inset 0 0 12px #ff7eb9;
+  background: linear-gradient(145deg, #ffd1e3, #ff9cc9);
+  transition: box-shadow 0.4s ease;
+}
+
+/* ซ่อนรูปภาพตอนโหลด */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  border-radius: 25px;
+  box-shadow: 0 0 15px rgba(255, 182, 193, 0.6);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+  box-shadow:
+    0 0 30px 3px #ff6fa1,
+    0 0 50px 12px rgba(255, 105, 180, 0.5);
+}
+
+.nav {
+  background: linear-gradient(145deg, #ff7eb9, #ff65a3);
+  border: none;
+  color: white;
+  font-size: 30px;
+  padding: 16px 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow:
+    0 6px 15px rgba(255, 105, 180, 0.7),
+    inset 0 -3px 10px rgba(255, 255, 255, 0.5);
+  transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+  margin: 0 20px;
+  user-select: none;
+}
+
+.nav:hover {
+  background: linear-gradient(145deg, #ff65a3, #ff3c81);
+  box-shadow:
+    0 10px 20px rgba(255, 45, 140, 0.9),
+    inset 0 -3px 12px rgba(255, 255, 255, 0.8);
+  transform: scale(1.15);
+}
+
+.nav:active {
+  transform: scale(0.95);
+  box-shadow:
+    0 4px 10px rgba(255, 45, 140, 0.6),
+    inset 0 3px 8px rgba(255, 255, 255, 0.4);
+}
+
+.footer-message {
+  text-align: left;
+  margin-top: 45px;
+  font-size: 18px;
+  font-family: 'Sriracha', cursive;
+  color: #a81555;
+  background-color: #fff0f7;
+  padding: 24px 28px;
+  border-radius: 28px;
+  width: 80%;
+  max-width: 720px;
+  box-shadow:
+    0 6px 20px rgba(255, 182, 193, 0.35),
+    inset 0 0 18px #ff9cc9;
+  line-height: 1.8;
+  transition: all 0.3s ease;
+  min-height: 230px;
+  max-height: 230px;
+  overflow-y: auto;
+  white-space: normal;
+  overflow-wrap: break-word;
+  user-select: none;
+}
+
+/* ปุ่มฟังเพลงหวาน ๆ */
+.music-button-container {
+  margin: 30px 0 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 15;
+}
+
+#music-btn {
+  background: linear-gradient(145deg, #ff85b9, #ff4c8b);
+  color: white;
+  font-size: 22px;
+  font-family: 'Sriracha', cursive;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow:
+    0 8px 20px rgba(255, 77, 130, 0.7),
+    inset 0 -3px 10px rgba(255, 123, 170, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  text-shadow: 0 1px 3px #900038;
+}
+
+#music-btn:hover {
+  transform: scale(1.1) rotate(-3deg);
+  box-shadow:
+    0 12px 30px rgba(255, 40, 90, 0.9),
+    inset 0 -5px 14px rgba(255, 105, 160, 1);
+}
+
+#music-btn:active {
+  transform: scale(0.95) rotate(0deg);
+  box-shadow:
+    0 6px 12px rgba(255, 40, 90, 0.6),
+    inset 0 2px 8px rgba(255, 123, 170, 0.7);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
